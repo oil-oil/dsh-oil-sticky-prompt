@@ -15,20 +15,32 @@ function reducedMotion(): boolean {
     && matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
-function textOf(row: HTMLElement): string {
-  const root = row.querySelector("[data-time-hover-root]");
-  const stack = root?.querySelector(":scope > div");
-  const bubble = stack?.lastElementChild;
-  return flattenPromptText(bubble?.textContent ?? "");
+/**
+ * Node slot wrapper the chat flow renders inside every row. Harness 0.2.x keeps
+ * the slot key stable while its CSS-module class hashes change per build.
+ */
+const NODE_SLOT = '[data-slot="conversation.chat.node"]';
+
+/**
+ * The user bubble. Its class keeps the stable `_bubble` suffix behind the
+ * hashed CSS-module prefix, so suffix matching survives rebuilds.
+ */
+const USER_BUBBLE = '[class*="_bubble"]';
+
+function userNode(row: HTMLElement): HTMLElement | null {
+  return row.querySelector<HTMLElement>(NODE_SLOT);
 }
 
 function bubbleOf(row: HTMLElement): HTMLElement {
-  const root = row.querySelector("[data-time-hover-root]");
-  const stack = root?.querySelector(":scope > div");
-  const bubble = stack?.lastElementChild;
+  const node = userNode(row);
+  const bubble = node?.querySelector<HTMLElement>(USER_BUBBLE);
   if (bubble instanceof HTMLElement) return bubble;
-  if (root instanceof HTMLElement) return root;
+  if (node instanceof HTMLElement) return node;
   return row;
+}
+
+function textOf(row: HTMLElement): string {
+  return flattenPromptText(bubbleOf(row).textContent ?? "");
 }
 
 function boxesOf(scroller: HTMLElement): { key: string; top: number; row: HTMLElement }[] {

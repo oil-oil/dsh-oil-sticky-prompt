@@ -1,4 +1,4 @@
-import type { ClientContext } from "@deepseek-ai/dsh-client-runtime/client";
+import type { Context } from "@deepseek-ai/cordis";
 
 import { installStickyUserRows } from "./installSticky.ts";
 
@@ -66,7 +66,7 @@ const STYLES = `
 
 export const inject: string[] = [];
 
-export function apply(ctx: ClientContext): void {
+export function apply(ctx: Context): void {
   ctx.effect(() => {
     const existing = document.querySelector(`style[data-plugin-css=${JSON.stringify(STYLE_ID)}]`);
     const tag = existing instanceof HTMLStyleElement ? existing : document.createElement("style");

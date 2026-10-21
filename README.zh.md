@@ -9,7 +9,7 @@
 <p align="center">
   <a href="https://github.com/oil-oil/dsh-oil-sticky-prompt/actions"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/oil-oil/dsh-oil-sticky-prompt/ci.yml?style=flat-square&amp;label=CI"></a>
   <a href="./LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-3167E3?style=flat-square"></a>
-  <img alt="DeepSeek Harness" src="https://img.shields.io/badge/DeepSeek%20Harness-0.1.0--rc.6-3167E3?style=flat-square">
+  <img alt="DeepSeek Harness" src="https://img.shields.io/badge/DeepSeek%20Harness-0.2.1--rc.2-3167E3?style=flat-square">
 </p>
 
 `dsh-oil-sticky-prompt` 是 DeepSeek Harness 的独立 Web 插件。长回复往上滚时，距离当前滚动窗口最近的那条用户提问，会收成通栏摘要钉在对话顶部。
@@ -55,9 +55,11 @@ npx @deepseek-ai/dsh plugin --profile web add github:oil-oil/dsh-oil-sticky-prom
 
 ## 兼容
 
-这一版对应 DeepSeek Harness `0.1.0-rc.6`。Harness 仍处于 Developer Preview。
+这一版对应 DeepSeek Harness `>=0.2.0-rc.1 <0.3.0-0`，并在 `0.2.1-rc.2` 上验证通过。Harness 仍处于 Developer Preview。
 
-安装时如果看到 `WARN Issues with peer dependencies found`，通常是 profile 根包没有声明 Harness Client 的 peer，不等于加载失败。
+Harness 0.2.x 会拒绝安装「声明了不接受当前版本的 `@deepseek-ai/dsh*` peer 或 `engines.dsh`」的插件。这一版声明了 0.2.x 的 `engines.dsh`，同时不再依赖已被移除的 `@deepseek-ai/dsh-client-runtime`，因此插件管理器可以正常安装。
+
+客户端按 0.2.x 的聊天 DOM 读取内容：用户行是 `[data-chat-flow-kind="user"]`，内容包在 `[data-slot="conversation.chat.node"]` 内，prompt 气泡是该容器里带 `_bubble` 后缀的类名。旧版的 `data-time-hover-root` 包裹层已不存在。
 
 ## 开发
 

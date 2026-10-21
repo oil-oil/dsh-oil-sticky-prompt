@@ -9,7 +9,7 @@
 <p align="center">
   <a href="https://github.com/oil-oil/dsh-oil-sticky-prompt/actions"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/oil-oil/dsh-oil-sticky-prompt/ci.yml?style=flat-square&amp;label=CI"></a>
   <a href="./LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-3167E3?style=flat-square"></a>
-  <img alt="DeepSeek Harness" src="https://img.shields.io/badge/DeepSeek%20Harness-0.1.0--rc.6-3167E3?style=flat-square">
+  <img alt="DeepSeek Harness" src="https://img.shields.io/badge/DeepSeek%20Harness-0.2.1--rc.2-3167E3?style=flat-square">
 </p>
 
 `dsh-oil-sticky-prompt` is a standalone Web plugin for DeepSeek Harness. While you scroll a long reply, the nearest user prompt stays at the top of the conversation as a compact full-width bar.
@@ -55,9 +55,11 @@ Restart Harness after either command.
 
 ## Compatibility
 
-This release targets DeepSeek Harness `0.1.0-rc.6`. DeepSeek Harness is still in Developer Preview.
+This release targets DeepSeek Harness `>=0.2.0-rc.1 <0.3.0-0`; it is verified on `0.2.1-rc.2`. DeepSeek Harness is still in Developer Preview.
 
-`WARN Issues with peer dependencies found` during install is expected when the profile root does not declare Harness Client peers. It is not a load failure.
+Harness 0.2.x rejects an install whose plugin declares `@deepseek-ai/dsh*` peers (or `engines.dsh`) that do not accept the running version. This release declares `engines.dsh` for the 0.2.x line, so the plugin manager accepts it; it no longer depends on the removed `@deepseek-ai/dsh-client-runtime` package.
+
+The client reads the 0.2.x chat DOM: user rows are `[data-chat-flow-kind="user"]`, their content sits behind `[data-slot="conversation.chat.node"]`, and the prompt bubble is the `_bubble` class inside it. The old `data-time-hover-root` wrapper no longer exists.
 
 ## Development
 

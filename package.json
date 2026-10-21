@@ -1,6 +1,6 @@
 {
   "name": "dsh-oil-sticky-prompt",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Pin the nearest user prompt to the top of a DeepSeek Harness transcript",
   "license": "MIT",
   "author": "oil-oil",
@@ -34,15 +34,16 @@
     "lib/client.js.map",
     "cordis.patch.yml"
   ],
+  "engines": {
+    "node": ">=22.19.0",
+    "dsh": ">=0.2.0-rc.1 <0.3.0-0"
+  },
   "dsh": {
     "bundle": {
       "patch": "./cordis.patch.yml"
     },
     "client": {
-      "platform": "web",
-      "inject": [
-        "@deepseek-ai/dsh-client-runtime"
-      ]
+      "platform": "web"
     }
   },
   "scripts": {
@@ -52,12 +53,10 @@
     "check": "pnpm typecheck && pnpm test && pnpm build"
   },
   "peerDependencies": {
-    "@deepseek-ai/cordis": "4.0.1",
-    "@deepseek-ai/dsh-client-runtime": "0.1.0-rc.6"
+    "@deepseek-ai/cordis": "^4.0.4"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis": "4.0.1",
-    "@deepseek-ai/dsh-client-runtime": "0.1.0-rc.6",
+    "@deepseek-ai/cordis": "^4.0.4",
     "tsdown": "^0.22.14",
     "typescript": "^5.9.3",
     "vitest": "^4.1.10"

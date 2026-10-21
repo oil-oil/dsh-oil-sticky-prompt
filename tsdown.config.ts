@@ -1,9 +1,6 @@
 import { defineConfig } from "tsdown";
 
 const PLUGIN_ID = "dsh-oil-sticky-prompt";
-const CLIENT_EXTERNALS = [
-  "@deepseek-ai/dsh-client-runtime/client",
-] as const;
 
 export default defineConfig([
   {
@@ -28,14 +25,6 @@ export default defineConfig([
     dts: false,
     sourcemap: true,
     clean: false,
-    deps: {
-      neverBundle: [...CLIENT_EXTERNALS],
-      alwaysBundle: (id: string) =>
-        CLIENT_EXTERNALS.includes(id as (typeof CLIENT_EXTERNALS)[number])
-          ? undefined
-          : true,
-      onlyBundle: false,
-    },
     outputOptions: {
       entryFileNames: "client.js",
       banner: `window.__ModuleLoader__.load({ id: ${JSON.stringify(PLUGIN_ID)}, factory: (require) => {`,
